@@ -1,0 +1,33 @@
+{% load sceneid_tags %}
+<!doctype html>
+<html>
+    <head>
+        <title>SceneID demo site</title>
+    </head>
+    <body>
+        <h1>SceneID demo site</h1>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block login_status %}
+            {% if request.user.is_authenticated %}
+                <p>
+                    Logged in as {{ request.user.username }} -
+                    <a href="{% url 'logout' %}">Log out</a>
+                </p>
+            {% else %}
+                <p>
+                    Not logged in - {% sceneid_login_button_large %}
+                </p>
+            {% endif %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+    </body>
+</html>
